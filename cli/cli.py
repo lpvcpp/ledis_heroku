@@ -4,6 +4,9 @@ import json
 import urllib.request
 
 
+link = "https://fathomless-mesa-47180.herokuapp.com/"
+#link = "http://localhost:5000/"
+
 class HelloWorld(cmd.Cmd):
 
     def sendPostRequest(self, url, body):
@@ -27,7 +30,7 @@ class HelloWorld(cmd.Cmd):
         words = text.split()
         if len(words) == 2:
             body = {"key":words[0], "value":words[1]}  
-            url = "http://localhost:5000/SET"
+            url = link + "SET"
             response = self.sendPostRequest(url, body)
             print (response.read())
 
@@ -44,7 +47,7 @@ class HelloWorld(cmd.Cmd):
             print ("wrong parameter")
         else:
             body = {"key":words[0]}
-            url = "http://localhost:5000/GET"
+            url = link + "GET"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -54,7 +57,7 @@ class HelloWorld(cmd.Cmd):
         words = text.split()
         if len(words) == 1 :
             body = {"key":words[0]}
-            url = "http://localhost:5000/LLEN"
+            url = link + "LLEN"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -69,7 +72,7 @@ class HelloWorld(cmd.Cmd):
         else :
             list_value = ' '.join(words[1:])
             body = {"key":words[0], "value" :list_value}
-            url = "http://localhost:5000/RPUSH"
+            url =  link + "RPUSH"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -78,7 +81,7 @@ class HelloWorld(cmd.Cmd):
         words = text.split()
         if len(words) == 1:
             body = {"key":words[0]}
-            url = "http://localhost:5000/LPOP"
+            url = link + "LPOP"
             response = self.sendPostRequest(url, body)
             print(response.read())
         else:
@@ -89,7 +92,7 @@ class HelloWorld(cmd.Cmd):
         words = text.split()
         if len(words) == 1:
             body = {"key":words[0]}
-            url = "http://localhost:5000/RPOP"
+            url = link + "RPOP"
             response = self.sendPostRequest(url, body)
             print(response.read())
         else:
@@ -100,7 +103,7 @@ class HelloWorld(cmd.Cmd):
         words = text.split()
         if len(words) == 3:
             body = {"key": words[0], "value": ' '.join(words[1:])}
-            url = "http://localhost:5000/LRANGE"
+            url = link + "LRANGE"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -116,7 +119,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0], "value": ' '.join(words[1:])}
-            url = "http://localhost:5000/SADD"
+            url = link + "SADD"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -127,7 +130,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0]}
-            url = "http://localhost:5000/SCARD"
+            url = link + "SCARD"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -138,7 +141,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0]}
-            url = "http://localhost:5000/SMEMBERS"
+            url = link + "SMEMBERS"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -149,7 +152,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0], "value": ' '.join(words[1:]) }
-            url = "http://localhost:5000/SREM"
+            url = link + "SREM"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -160,7 +163,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"listKey": ' '.join(words)}
-            url = "http://localhost:5000/SINTER"
+            url = link + "SINTER"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -168,7 +171,7 @@ class HelloWorld(cmd.Cmd):
 
     def do_KEYS(self, text):
         """ LIST ALL KEY"""
-        r = requests.post("http://localhost:5000/KEYS")
+        r = requests.post(link + "KEYS")
         print(r.text)
 
     def do_DEL(self, text):
@@ -178,13 +181,13 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0]}
-            url = "http://localhost:5000/DEL"
+            url = link + "DEL"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
     def do_FLUSHDB(self, text):
         """ 'DELETE ALL KEY"""
-        r = requests.post("http://localhost:5000/FLUSHDB")
+        r = requests.post(link + "FLUSHDB")
         print(r.text)
 
     def do_EXPIRE(self, text):
@@ -194,7 +197,7 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0], "timeout": words[1]}
-            url = "http://localhost:5000/EXPIRE"
+            url = link + "EXPIRE"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
@@ -205,19 +208,19 @@ class HelloWorld(cmd.Cmd):
             print ("Wrong parameter")
         else:
             body = {"key": words[0]}
-            url = "http://localhost:5000/TTL"
+            url = link + "TTL"
             response = self.sendPostRequest(url, body)
             print(response.read())
 
     def do_SAVE(self, text):
         """ SAVE CURRENT STATE"""
-        r = requests.post("http://localhost:5000/SAVE")
+        r = requests.post(link + "SAVE")
         print(r.text)
 
 
     def do_RESTORE(self, text):
         """ RESTORE CURRENT STATE"""
-        r = requests.post("http://localhost:5000/RESTORE")
+        r = requests.post(link + "RESTORE")
         print(r.text)
 
 if __name__ == '__main__':
